@@ -26,17 +26,19 @@ def honap_atalakito(honap):
         honap = "December"
 
     else:
-        honap=False
+        honap = "if not cond"
 
     return honap
 
+
 def napok_validalas(nap):
-    if nap <= "32":
+    if nap < 32:
         return nap
     else:
-        nap = False
+        nap = "if not cond"
 
     return nap
+
 
 def szakok_validalasa(szak):
     if szak == "B1" or szak == "b1":
@@ -61,13 +63,6 @@ def szakok_validalasa(szak):
         szak = "H6"
 
     else:
-        szak = False
+        szak = "if not cond"
 
     return szak
-
-
-
-
-
-
-
