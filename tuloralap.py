@@ -1,29 +1,17 @@
 from fuggvenyeim.rutinok import honap_atalakito, napok_validalas, szakok_validalasa
 from openpyxl import Workbook, load_workbook
 
-honap = str.capitalize(input("Kérem a hónapot:"))
-while honap_atalakito(honap) == "if not cond":
-    print("Kérem adjon meg létező hónap nevet. pl. 01, Január, stb:")
-    honap = str.capitalize(input("Kérem a hónapot:"))
+honap = honap_atalakito()
 
-nap = int(input("Kérem a napot:"))
-while napok_validalas(nap) == "if not cond":
-    print("Kérem adjon meg 1 -31 közötti számot, figyeljen, hogy az aktuális hónap tartalmazzon enny napot!")
-    nap = int(input("Kérem a napot:"))
+nap = napok_validalas()
 
-szak = input("Melyik szak (két karakterrel, pl. B1 vagy H5 stb.):")
-while szakok_validalasa(szak) == "if not cond":
-    print("Kérem dajon meg valós szakot!")
-    szak = input("Melyik szak (két karakterrel, pl. B1 vagy H5 stb.):")
+szak = szakok_validalasa()
 
-honap = honap_atalakito(honap)
-nap = napok_validalas(nap)
-szak = szakok_validalasa(szak)
 en_muszakom = 1
 filename_nap = nap
 
-ADAT_FILE = f"C:/Users/Hp/Desktop/letszam_fuggvenyekkel/MŰSZAKNAPLÓ/Műszaknapló_{szak}.xlsx"
-TULORA_FILE = "C:/Users/Hp/Desktop/letszam_fuggvenyekkel/MŰSZAKNAPLÓ/tuloracsoportos.xlsx"
+ADAT_FILE = f"C:/Users/user/PycharmProjects/letszam_fuggvenyekkel/MŰSZAKNAPLÓ/Műszaknapló_{szak}.xlsx"
+TULORA_FILE = "C:/Users/user/PycharmProjects/letszam_fuggvenyekkel/MŰSZAKNAPLÓ/tuloracsoportos.xlsx"
 
 munkafuzet = Workbook()
 muszaknaplo = load_workbook(filename=ADAT_FILE)
@@ -49,6 +37,10 @@ for row in range(a, vege):
         continue
 
     elif aktualis_lap.cell(row=a, column=oszlop).value == "P":
+        continue
+    elif aktualis_lap.cell(row=a, column=oszlop).value == "Ű":
+        continue
+    elif aktualis_lap.cell(row=a, column=oszlop).value == "B":
         continue
 
     b = b + 1
