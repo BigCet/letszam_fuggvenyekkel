@@ -7,11 +7,16 @@ nap = napok_validalas()
 
 szak = szakok_validalasa()
 
+elrend_ok = input("Elrendelés oka, ha nem írsz be semmit, akkor létszámpótlás:" )
+
+if elrend_ok == "":
+    elrend_ok = "Létszámpótlás"
+
 en_muszakom = 1
 filename_nap = nap
 
-ADAT_FILE = f"C:/Users/user/PycharmProjects/letszam_fuggvenyekkel/MŰSZAKNAPLÓ/Műszaknapló_{szak}.xlsx"
-TULORA_FILE = "C:/Users/user/PycharmProjects/letszam_fuggvenyekkel/MŰSZAKNAPLÓ/tuloracsoportos.xlsx"
+ADAT_FILE = f"MŰSZAKNAPLÓ/Műszaknapló_{szak}.xlsx"
+TULORA_FILE = "MŰSZAKNAPLÓ/tuloracsoportos.xlsx"
 
 munkafuzet = Workbook()
 muszaknaplo = load_workbook(filename=ADAT_FILE)
@@ -20,6 +25,8 @@ tulora = load_workbook(filename=TULORA_FILE)
 lap = tulora.active
 
 lap["C3"] = f"2021.{honap}"
+lap["I5"] = f"Szervezet: Termelési Osztály {szak} szak."
+lap["A6"] = f"Elrendelés oka: {elrend_ok}. "
 
 oszlop = nap + 4
 
@@ -33,14 +40,8 @@ sorszam = 0
 for row in range(a, vege):
     a = a + 1
     aktualis_lap = muszaknaplo[f"2021 {honap}"]
-    if not aktualis_lap[f"C{a}"].value:
-        continue
 
-    elif aktualis_lap.cell(row=a, column=oszlop).value == "P":
-        continue
-    elif aktualis_lap.cell(row=a, column=oszlop).value == "Ű":
-        continue
-    elif aktualis_lap.cell(row=a, column=oszlop).value == "B":
+    if type(aktualis_lap.cell(row=a, column=oszlop).value) != int:
         continue
 
     b = b + 1
@@ -69,9 +70,6 @@ for row in range(a, vege):
     uj_adat = [tsz, name, nap, tol, ig, 8, 2, "", "", "", "", 1]
 
     if c == 25:
-        # Kep = "matra.jpg"
-        # my_images = openpyxl.drawing.image.Image(Kep)
-        # lap.add_image(my_images, 'A1')
 
         tulora.save(f"tulora_{szak}_{honap}_{filename_nap}_{sorszam}.xlsx")
 
